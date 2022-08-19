@@ -42,5 +42,9 @@ public class Window implements Runnable {
                 }
             }
         }
+
+        for (int x = 10; x < 15; x++) {
+            boxes[x][10].cell.status = Status.LIVE;
+        }
     }
 }
