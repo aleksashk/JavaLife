@@ -28,5 +28,19 @@ public class Window implements Runnable {
                 frame.add(boxes[x][y]);
             }
         }
+//первые 2 for выбираем конкретную клетку на экране
+//вокруг этой клетки проверяются все 8 клеток и каждую
+//радомстоящую добавляем как соседа к основной в центре
+        for (int x = 0; x < Config.WIDTH; x++) {
+            for (int y = 0; y < Config.HEIGHT; y++) {
+                for (int sx = -1; sx <= +1; sx++) {
+                    for (int sy = -1; sy <= +1; sy++) {
+                        if (!(sx == 0 && sy == 0)) {
+                            boxes[x][y].cell.addNear(boxes[(x + sx + Config.WIDTH) % Config.WIDTH][(y + sy + Config.HEIGHT) % Config.HEIGHT].cell);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
