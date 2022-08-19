@@ -32,4 +32,10 @@ public class Cell {
         }
         return count;
     }
+
+    public void turn() {
+        for (Cell cell : near) {
+            cell.status = cell.status.isCell() ? Status.NONE : Status.LIVE;
+        }
+    }
 }
