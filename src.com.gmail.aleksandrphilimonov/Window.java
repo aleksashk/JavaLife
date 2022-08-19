@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Window implements Runnable {
     JFrame frame;
@@ -8,6 +10,7 @@ public class Window implements Runnable {
     public void run() {
         initFrame();
         initBoxes();
+        initTimer();//запускае очередные поколения время от времени
     }
 
     void initFrame() {
@@ -45,6 +48,31 @@ public class Window implements Runnable {
 
         for (int x = 10; x < 15; x++) {
             boxes[x][10].cell.status = Status.LIVE;
+            boxes[x][10].setColor();
+        }
+    }
+
+    private void initTimer() {
+        TimerListener t1 = new TimerListener();
+        Timer timer = new Timer(Config.SLEEPMS, t1);
+        timer.start();
+    }
+
+    private class TimerListener implements ActionListener {
+        boolean flop = false;
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            flop = !flop;
+            for (int x = 0; x < Config.WIDTH; x++) {
+                for (int y = 0; y < Config.HEIGHT; y++) {
+                    if (flop) {
+                        boxes[x][y].step1();
+                    } else {
+                        boxes[x][y].step2();
+                    }
+                }
+            }
         }
     }
 }
